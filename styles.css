@@ -1,0 +1,27 @@
+.grid {
+  width: 600px;
+  height: 900px;
+  background-color: yellow;
+  position: relative;
+  overflow: hidden;
+}
+
+.platformSection {
+  width: 600px;
+  height: 900px;
+  position: absolute;
+}
+
+.doodler {
+  width: 60px;
+  height: 85px;
+  position: absolute;
+  background-color: red;
+}
+
+.platform {
+  width: 85px;
+  height: 15px;
+  background-color: green;
+  position: absolute;
+}

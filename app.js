@@ -1,5 +1,11 @@
 const game = () => {
   const grid = document.querySelector(".grid");
+  const gridWidth = 600;
+  const gridHeight = 900;
+
+  grid.style.width = `${gridWidth}px`;
+  grid.style.height = `${gridHeight}px`;
+
   let isGameOver = false;
   let platformCount = 5;
   let platforms = [];
@@ -75,7 +81,7 @@ const game = () => {
         //check for collision
         if (
           this.position.y >= platform.position.y &&
-          this.position.y <= platform.position.y + 15 &&
+          this.position.y <= platform.position.y + platform.height &&
           this.position.x + platform.width >= platform.position.x &&
           this.position.x <= platform.position.x + platform.width &&
           this.isJumping === false
@@ -111,16 +117,18 @@ const game = () => {
     constructor(newPlatBottom) {
       this.visual = document.createElement("div");
       this.visual.classList.add("platform");
-
-      this.position = {
-        x: Math.random() * (600 - 85),
-        y: newPlatBottom,
-      };
       this.width = 85;
       this.height = 15;
 
-      this.visual.style.left = this.position.x + "px";
-      this.visual.style.bottom = this.position.y + "px";
+      this.position = {
+        x: Math.random() * (gridWidth - this.width),
+        y: newPlatBottom,
+      };
+
+      this.visual.style.left = `${this.position.x}px`;
+      this.visual.style.bottom = `${this.position.y}px`;
+      this.visual.style.width = `${this.width}px`;
+      this.visual.style.height = `${this.height}px`;
     }
 
     set bottom(y) {
@@ -129,9 +137,11 @@ const game = () => {
   }
 
   const createPlatforms = (minY) => {
-    const platformGrid = document.createElement("div");
-    platformGrid.classList.add("platformSection");
-    grid.insertBefore(platformGrid, grid.firstChild);
+    const platformSection = document.createElement("div");
+    platformSection.classList.add("platformSection");
+    platformSection.style.width = `${gridWidth}px`;
+    platformSection.style.height = `${gridHeight}px`;
+    grid.insertBefore(platformSection, grid.firstChild);
 
     const getRand = (min, max) => {
       min = Math.ceil(min);
@@ -140,9 +150,9 @@ const game = () => {
     };
     let platformCount = getRand(5, 15);
     for (let i = 0; i < platformCount; i++) {
-      let platGap = 900 / platformCount;
+      let platGap = gridHeight / platformCount;
       let newPlat = new Platform(minY + i * platGap);
-      platformGrid.appendChild(newPlat.visual);
+      platformSection.appendChild(newPlat.visual);
       platforms.push(newPlat);
     }
 
@@ -153,7 +163,7 @@ const game = () => {
 
   const startGame = () => {
     createPlatforms(100);
-    createPlatforms(900);
+    createPlatforms(gridHeight);
     let doodler = new Doodler(
       platforms[0].position.x,
       platforms[0].position.y + 30

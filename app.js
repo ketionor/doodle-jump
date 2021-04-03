@@ -106,8 +106,10 @@ const game = () => {
       platforms.push(newPlat);
     }
 
-    if (GRID.childElementCount > 4) {
-      GRID.removeChild(GRID.childNodes[3]);
+    if (GRID.childElementCount > 7) {
+      let list = document.querySelectorAll(".platformSection");
+      GRID.removeChild(list[list.length - 1]);
+      //GRID.removeChild(GRID.childNodes[3]);
     }
   };
 
@@ -117,6 +119,8 @@ const game = () => {
 
   const newGame = () => {
     gameOver.style.visibility = "hidden";
+    score = 0;
+    SCOREBOARD.innerHTML = "Score: 0";
     const gameElement = document.querySelectorAll(".game-element");
     gameElement.forEach((element) => {
       console.log("removing: ", element);

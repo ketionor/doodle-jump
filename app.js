@@ -1,24 +1,33 @@
 const game = () => {
-  const grid = document.querySelector(".grid");
+  const GRID = document.querySelector(".grid");
+  const gameOver = document.querySelector(".game-over");
+  const canvas = document.querySelector("#dino");
+  let ctx = canvas.getContext("2d");
+  ctx.imageSmoothingEnabled = false;
+
+  //Constants
   const gridWidth = 600;
   const gridHeight = 900;
 
-  grid.style.width = `${gridWidth}px`;
-  grid.style.height = `${gridHeight}px`;
+  GRID.style.width = `${gridWidth}px`;
+  GRID.style.height = `${gridHeight}px`;
+
+  gameOver.style.width = `${gridWidth}px`;
+  gameOver.style.height = `${gridHeight}px`;
 
   const scoreBoard = document.querySelector(".score-board");
 
-  let isGameOver = false;
   let platformCount = 5;
   let platforms = [];
-  let framerate = 30;
   let gameSpeed = 10;
   let score = 0;
 
   class Doodler {
     constructor(x, y) {
       this.visual = document.createElement("div");
+      GRID.appendChild(this.visual);
       this.visual.className = "doodler game-element";
+
       document.addEventListener("keydown", this.setMovement);
       document.addEventListener("keyup", this.stopMovement);
 
@@ -39,6 +48,22 @@ const game = () => {
 
       this.visual.style.left = this.position.x + "px";
       this.visual.style.bottom = this.position.y + "px";
+
+      //Fetch the sprites!
+      let spriteScale = 96;
+      let vita = new Image();
+      vita.src = "https://i.ibb.co/QJP837R/Dino-Sprites-vita.png";
+
+      canvas.style.width = `${spriteScale}px`;
+      canvas.style.height = `${spriteScale}px`;
+
+      vita.onload = function () {
+        init();
+      };
+
+      function init() {
+        ctx.drawImage(vita, 0, 0, 24, 24, 0, 0, spriteScale, spriteScale);
+      }
     }
 
     updatePosition(direction) {
@@ -59,6 +84,9 @@ const game = () => {
         this.position.x += this.doodlerSpeed;
         this.visual.style.left = this.position.x + "px";
       }
+
+      canvas.style.left = `${this.position.x - 16}px`;
+      canvas.style.bottom = `${this.position.y - 6}px`;
     }
 
     //the methods below have to be stated as arrow functions, or else they don't have access
@@ -120,7 +148,7 @@ const game = () => {
       }
 
       if (this.position.y <= 0) {
-        console.log("Game over!");
+        handleGameOver();
       } else {
         requestAnimationFrame(this.gravity);
       }
@@ -156,7 +184,7 @@ const game = () => {
 
     platformSection.style.width = `${gridWidth}px`;
     platformSection.style.height = `${gridHeight}px`;
-    grid.insertBefore(platformSection, grid.firstChild);
+    GRID.insertBefore(platformSection, GRID.firstChild);
 
     const getRand = (min, max) => {
       min = Math.ceil(min);
@@ -173,19 +201,27 @@ const game = () => {
       platforms.push(newPlat);
     }
 
-    if (grid.childElementCount > 4) {
-      grid.removeChild(grid.childNodes[3]);
+    if (GRID.childElementCount > 4) {
+      GRID.removeChild(GRID.childNodes[3]);
     }
   };
 
-  const startGame = () => {
-    //Remove any existing game elements
+  const handleGameOver = () => {
+    gameOver.style.visibility = "visible";
+  };
+
+  const newGame = () => {
+    gameOver.style.visibility = "hidden";
     const gameElement = document.querySelectorAll(".game-element");
     gameElement.forEach((element) => {
       console.log("removing: ", element);
-      grid.removeChild(element);
+      GRID.removeChild(element);
     });
     platforms = [];
+    startGame();
+  };
+
+  const startGame = () => {
     createPlatforms(100);
     createPlatforms(gridHeight);
     let doodler = new Doodler(
@@ -193,7 +229,7 @@ const game = () => {
       platforms[0].position.y + 30
     );
 
-    grid.appendChild(doodler.visual);
+    GRID.appendChild(doodler.visual);
     requestAnimationFrame(doodler.gravity);
   };
 
@@ -201,7 +237,7 @@ const game = () => {
 
   //New game button
   const newGameButton = document.querySelector(".new-game-button");
-  newGameButton.addEventListener("click", startGame);
+  newGameButton.addEventListener("click", newGame);
 };
 
 game();

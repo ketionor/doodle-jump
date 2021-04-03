@@ -12,7 +12,7 @@
   width: 60px;
   height: 85px;
   position: absolute;
-  background-color: red;
+  /* background-color: rgba(255, 0, 0, 0.205); */
 }
 
 .platform {
@@ -28,4 +28,19 @@
   height: 3em;
   background-color: rgba(255, 105, 180, 0.253);
   text-align: right;
+}
+
+.game-over {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.562);
+  visibility: hidden;
+}
+
+canvas {
+  position: absolute;
 }

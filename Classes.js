@@ -53,7 +53,7 @@ class Doodler {
 
   //the methods below have to be stated as arrow functions, or else they don't have access
   //to the class variables and methods. I am not sure at all why this works.
-  updatePosition = (direction) => {
+  updatePosition = (direction, gridWidth) => {
     if (!this.gridIsMoving) {
       this.position.y += this.doodlerSpeed * direction;
       this.hitBox.style.bottom = `${this.position.y}px`;
@@ -65,8 +65,8 @@ class Doodler {
     }
 
     if (
-      this.isMovingRight === true //&&
-      //this.position.x < gridWidth - this.width
+      this.isMovingRight === true &&
+      this.position.x < gridWidth - this.width
     ) {
       this.position.x += this.doodlerSpeed;
       this.hitBox.style.left = this.position.x + "px";

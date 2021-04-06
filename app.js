@@ -4,8 +4,12 @@ const game = () => {
   const gameOver = document.querySelector(".game-over");
 
   //Constants
-  const gridWidth = 600;
-  const gridHeight = 900;
+  //const gridWidth = 600;
+  //const gridHeight = 900;
+
+  const gridStyles = window.getComputedStyle(GRID);
+  const gridWidth = parseInt(gridStyles.getPropertyValue("width"), 10);
+  const gridHeight = parseInt(gridStyles.getPropertyValue("height"), 10);
 
   GRID.style.width = `${gridWidth}px`;
   GRID.style.height = `${gridHeight}px`;
@@ -71,9 +75,9 @@ const game = () => {
     //jump on collision, otherwise fall
     //isJumping ? this.updatePosition(1) : this.updatePosition(-1);
     if (!doodler.isJumping) {
-      doodler.updatePosition(-1);
+      doodler.updatePosition(-1, gridWidth);
     } else if (doodler.isJumping) {
-      doodler.updatePosition(1);
+      doodler.updatePosition(1, gridWidth);
     }
 
     if (doodler.position.y <= 0) {

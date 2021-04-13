@@ -1,6 +1,5 @@
 class Doodler {
   constructor(parent, gridHeight, gridWidth) {
-    //defin parameters
     this.isJumping = false;
     this.isMovingLeft = false;
     this.isMovingRight = false;
@@ -45,14 +44,8 @@ class Doodler {
     const init = () => {
       CTX.drawImage(sprite, 0, 0, 24, 24, 0, 0, spriteScale, spriteScale);
     };
-
-    //add event listeners
-    // document.addEventListener("keydown", this.setMovement);
-    // document.addEventListener("keyup", this.stopMovement);
   }
 
-  //the methods below have to be stated as arrow functions, or else they don't have access
-  //to the class variables and methods. I am not sure at all why this works.
   updatePosition(direction, gridWidth) {
     if (!this.gridIsMoving) {
       this.position.y += this.doodlerSpeed * direction;

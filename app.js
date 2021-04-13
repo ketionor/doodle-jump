@@ -1,6 +1,5 @@
 // create an express app
 const express = require("express");
-const { url } = require("node:inspector");
 const app = express();
 var path = require("path");
 

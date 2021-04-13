@@ -2,7 +2,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("./Sprites/double-bubble.png");
+  background-image: url("./resources/double-bubble.png");
 }
 
 .grid {
@@ -16,7 +16,7 @@ body {
   border: 3px solid black;
   border-radius: 20px;
 
-  background-image: url("./Sprites/15136.jpg");
+  background-image: url("./resources/15136.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -47,7 +47,7 @@ body {
 
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .game-over {

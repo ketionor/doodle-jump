@@ -24,7 +24,9 @@ const game = () => {
   let gameSpeed = 10;
   let score = 0;
 
-  let doodler = new Doodler(GRID);
+  let doodler = new Doodler(GRID, gridHeight, gridWidth);
+  document.addEventListener("keydown", (e) => doodler.setMovement(e));
+  document.addEventListener("keyup", (e) => doodler.stopMovement(e));
 
   const startGame = () => {
     createPlatforms(100);
@@ -33,6 +35,7 @@ const game = () => {
     doodler.position.y = platforms[0].position.y + 15;
     doodler.hitBox.style.left = `${doodler.position.x}px`;
     doodler.hitBox.style.bottom = `${doodler.position.y}px`;
+
     requestAnimationFrame(render);
   };
 
@@ -105,7 +108,7 @@ const game = () => {
 
     for (let i = 0; i < platformCount; i++) {
       let platGap = gridHeight / platformCount;
-      let newPlat = new Platform(minY + i * platGap, gridWidth);
+      let newPlat = new Platform(minY + i * platGap, gridWidth, gridHeight);
       platformSection.appendChild(newPlat.visual);
       platforms.push(newPlat);
     }

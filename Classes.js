@@ -1,5 +1,5 @@
 class Doodler {
-  constructor(parent) {
+  constructor(parent, gridHeight, gridWidth) {
     //defin parameters
     this.isJumping = false;
     this.isMovingLeft = false;
@@ -13,15 +13,15 @@ class Doodler {
       y: 0,
     };
 
-    this.height = 85;
-    this.width = 35;
+    this.height = gridHeight / 12;
+    this.width = this.height;
 
     //create the hit box, set its position, and set size to fit sprite
     this.hitBox = document.createElement("div");
     parent.appendChild(this.hitBox);
     this.hitBox.className = "doodler";
 
-    this.hitBox.style.width = `${this.width}px`;
+    this.hitBox.style.width = `${this.height}px`;
     this.hitBox.style.height = `${this.height}px`;
 
     //Create the sprite
@@ -29,12 +29,12 @@ class Doodler {
     const CTX = this.CANVAS.getContext("2d");
     CTX.imageSmoothingEnabled = false;
 
-    let spriteScale = 96;
+    let spriteScale = this.height;
     let sprite = new Image();
     sprite.src = "https://i.ibb.co/QJP837R/Dino-Sprites-vita.png";
 
-    this.CANVAS.style.width = `${spriteScale}px`;
-    this.CANVAS.style.height = `${spriteScale}px`;
+    this.CANVAS.style.width = `${gridHeight / 12}px`;
+    this.CANVAS.style.height = `${gridHeight / 12}px`;
 
     CTX.imageSmoothingEnabled = false;
 
@@ -47,13 +47,13 @@ class Doodler {
     };
 
     //add event listeners
-    document.addEventListener("keydown", this.setMovement);
-    document.addEventListener("keyup", this.stopMovement);
+    // document.addEventListener("keydown", this.setMovement);
+    // document.addEventListener("keyup", this.stopMovement);
   }
 
   //the methods below have to be stated as arrow functions, or else they don't have access
   //to the class variables and methods. I am not sure at all why this works.
-  updatePosition = (direction, gridWidth) => {
+  updatePosition(direction, gridWidth) {
     if (!this.gridIsMoving) {
       this.position.y += this.doodlerSpeed * direction;
       this.hitBox.style.bottom = `${this.position.y}px`;
@@ -72,30 +72,30 @@ class Doodler {
       this.hitBox.style.left = this.position.x + "px";
     }
 
-    this.CANVAS.style.left = `${this.position.x - 32}px`;
-    this.CANVAS.style.bottom = `${this.position.y - 6}px`;
-  };
+    this.CANVAS.style.left = `${this.position.x}px`;
+    this.CANVAS.style.bottom = `${this.position.y}px`;
+  }
 
-  setMovement = (e) => {
+  setMovement(e) {
     if (e.key === "ArrowLeft") {
       this.isMovingLeft = true;
     } else if (e.key === "ArrowRight") {
       this.isMovingRight = true;
     }
-  };
+  }
 
-  stopMovement = () => {
+  stopMovement() {
     this.isMovingLeft = false;
     this.isMovingRight = false;
-  };
+  }
 }
 
 class Platform {
-  constructor(newPlatBottom, gridWidth) {
+  constructor(newPlatBottom, gridWidth, gridHeight) {
     this.visual = document.createElement("div");
     this.visual.className = "platform";
-    this.width = 85;
-    this.height = 15;
+    this.width = gridWidth / 7;
+    this.height = gridHeight / 60;
 
     this.position = {
       x: Math.random() * (gridWidth - this.width),

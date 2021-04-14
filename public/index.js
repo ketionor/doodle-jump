@@ -116,9 +116,9 @@ const game = () => {
     //jump on collision, otherwise fall
     //isJumping ? this.updatePosition(1) : this.updatePosition(-1);
     if (!doodler.isJumping) {
-      doodler.updatePosition(-1, gridWidth, CANVAS);
+      doodler.updatePosition(-1, gridWidth, CANVAS, gridHeight);
     } else if (doodler.isJumping) {
-      doodler.updatePosition(1, gridWidth, CANVAS);
+      doodler.updatePosition(1, gridWidth, CANVAS, gridHeight);
     }
 
     if (doodler.position.y <= 0) {

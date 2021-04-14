@@ -13,18 +13,18 @@ class Doodler {
     };
 
     this.height = gridHeight / 12;
-    this.width = this.height;
+    this.width = this.height / 2;
 
     //create the hit box, set its position
     this.hitBox = document.createElement("div");
     parent.appendChild(this.hitBox);
     this.hitBox.className = "doodler";
 
-    this.hitBox.style.width = `${this.height / 2}px`;
+    this.hitBox.style.width = `${this.width}px`;
     this.hitBox.style.height = `${this.height}px`;
   }
 
-  updatePosition(direction, gridWidth, sprite) {
+  updatePosition(direction, gridWidth, sprite, gridHeight) {
     if (!this.gridIsMoving) {
       this.position.y += this.doodlerSpeed * direction;
       this.hitBox.style.bottom = `${this.position.y}px`;
@@ -43,7 +43,7 @@ class Doodler {
       this.hitBox.style.left = this.position.x + "px";
     }
 
-    sprite.style.left = `${this.position.x - gridWidth / 35}px`;
+    sprite.style.left = `${this.position.x - gridHeight / 60}px`;
     sprite.style.bottom = `${this.position.y}px`;
   }
 

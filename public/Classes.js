@@ -15,35 +15,13 @@ class Doodler {
     this.height = gridHeight / 12;
     this.width = this.height;
 
-    //create the hit box, set its position, and set size to fit sprite
+    //create the hit box, set its position
     this.hitBox = document.createElement("div");
     parent.appendChild(this.hitBox);
     this.hitBox.className = "doodler";
 
-    this.hitBox.style.width = `${this.height}px`;
+    this.hitBox.style.width = `${this.height / 2}px`;
     this.hitBox.style.height = `${this.height}px`;
-
-    //Create the sprite
-    // this.CANVAS = document.querySelector("#dino");
-    // const CTX = this.CANVAS.getContext("2d");
-    // CTX.imageSmoothingEnabled = false;
-
-    // let spriteScale = this.height;
-    // let sprite = new Image();
-    // sprite.src = "https://i.ibb.co/QJP837R/Dino-Sprites-vita.png";
-
-    // this.CANVAS.style.width = `${gridHeight / 12}px`;
-    // this.CANVAS.style.height = `${gridHeight / 12}px`;
-
-    // CTX.imageSmoothingEnabled = false;
-
-    // sprite.onload = () => {
-    //   init();
-    // };
-
-    // const init = () => {
-    //   CTX.drawImage(sprite, 0, 0, 24, 24, 0, 0, spriteScale, spriteScale);
-    // };
   }
 
   updatePosition(direction, gridWidth, sprite) {
@@ -65,7 +43,7 @@ class Doodler {
       this.hitBox.style.left = this.position.x + "px";
     }
 
-    sprite.style.left = `${this.position.x}px`;
+    sprite.style.left = `${this.position.x - gridWidth / 35}px`;
     sprite.style.bottom = `${this.position.y}px`;
   }
 

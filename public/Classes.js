@@ -24,29 +24,29 @@ class Doodler {
     this.hitBox.style.height = `${this.height}px`;
 
     //Create the sprite
-    this.CANVAS = document.querySelector("#dino");
-    const CTX = this.CANVAS.getContext("2d");
-    CTX.imageSmoothingEnabled = false;
+    // this.CANVAS = document.querySelector("#dino");
+    // const CTX = this.CANVAS.getContext("2d");
+    // CTX.imageSmoothingEnabled = false;
 
-    let spriteScale = this.height;
-    let sprite = new Image();
-    sprite.src = "https://i.ibb.co/QJP837R/Dino-Sprites-vita.png";
+    // let spriteScale = this.height;
+    // let sprite = new Image();
+    // sprite.src = "https://i.ibb.co/QJP837R/Dino-Sprites-vita.png";
 
-    this.CANVAS.style.width = `${gridHeight / 12}px`;
-    this.CANVAS.style.height = `${gridHeight / 12}px`;
+    // this.CANVAS.style.width = `${gridHeight / 12}px`;
+    // this.CANVAS.style.height = `${gridHeight / 12}px`;
 
-    CTX.imageSmoothingEnabled = false;
+    // CTX.imageSmoothingEnabled = false;
 
-    sprite.onload = () => {
-      init();
-    };
+    // sprite.onload = () => {
+    //   init();
+    // };
 
-    const init = () => {
-      CTX.drawImage(sprite, 0, 0, 24, 24, 0, 0, spriteScale, spriteScale);
-    };
+    // const init = () => {
+    //   CTX.drawImage(sprite, 0, 0, 24, 24, 0, 0, spriteScale, spriteScale);
+    // };
   }
 
-  updatePosition(direction, gridWidth) {
+  updatePosition(direction, gridWidth, sprite) {
     if (!this.gridIsMoving) {
       this.position.y += this.doodlerSpeed * direction;
       this.hitBox.style.bottom = `${this.position.y}px`;
@@ -65,8 +65,8 @@ class Doodler {
       this.hitBox.style.left = this.position.x + "px";
     }
 
-    this.CANVAS.style.left = `${this.position.x}px`;
-    this.CANVAS.style.bottom = `${this.position.y}px`;
+    sprite.style.left = `${this.position.x}px`;
+    sprite.style.bottom = `${this.position.y}px`;
   }
 
   setMovement(e) {

@@ -6,6 +6,7 @@ const game = () => {
   const gameOver = document.querySelector(".game-over");
 
   //Constants
+
   //const gridWidth = 600;
   //const gridHeight = 900;
 
@@ -28,6 +29,40 @@ const game = () => {
   let doodler = new Doodler(GRID, gridHeight, gridWidth);
   document.addEventListener("keydown", (e) => doodler.setMovement(e));
   document.addEventListener("keyup", (e) => doodler.stopMovement(e));
+
+  //Sprite
+  const CANVAS = document.querySelector("#dino");
+  const CTX = CANVAS.getContext("2d");
+  CTX.imageSmoothingEnabled = false;
+
+  //let spriteScale = this.height;
+  let sprite = new Image();
+  sprite.src = "https://i.ibb.co/QJP837R/Dino-Sprites-vita.png";
+
+  CANVAS.style.width = `${gridHeight / 12}px`;
+  CANVAS.style.height = `${gridHeight / 12}px`;
+
+  CTX.imageSmoothingEnabled = false;
+
+  sprite.onload = () => {
+    init(0);
+  };
+
+  const init = (spriteNumber) => {
+    CTX.clearRect(0, 0, gridHeight / 12, gridHeight / 12);
+    CTX.drawImage(
+      sprite,
+      0 + spriteNumber * 24,
+      0,
+      24,
+      24,
+      0,
+      0,
+      gridHeight / 12,
+      gridHeight / 12
+    );
+    console.log("sprite update", spriteNumber);
+  };
 
   const startGame = () => {
     createPlatforms(100);
@@ -65,8 +100,10 @@ const game = () => {
       ) {
         console.log("colission at: ", doodler.position);
         doodler.isJumping = true;
+        init(1);
         setTimeout(() => {
           doodler.isJumping = false;
+          init(0);
         }, 500);
       }
     });
@@ -79,9 +116,9 @@ const game = () => {
     //jump on collision, otherwise fall
     //isJumping ? this.updatePosition(1) : this.updatePosition(-1);
     if (!doodler.isJumping) {
-      doodler.updatePosition(-1, gridWidth);
+      doodler.updatePosition(-1, gridWidth, CANVAS);
     } else if (doodler.isJumping) {
-      doodler.updatePosition(1, gridWidth);
+      doodler.updatePosition(1, gridWidth, CANVAS);
     }
 
     if (doodler.position.y <= 0) {
